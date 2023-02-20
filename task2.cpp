@@ -20,7 +20,6 @@ void *print(void *arg) {
     printf("%d\n", *id);
     printer_working = 0;
     pthread_cond_signal(&printer_available);
-
     pthread_mutex_unlock(&m);
     sleep(2);
   }
