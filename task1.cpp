@@ -12,18 +12,22 @@ std::string dest;
 
 void *copy_string(void *n) {
   int *arr = (int *)n;
-
-  pthread_mutex_lock(&m);
-  for (int i = arr[0]; i < arr[1]; ++i) {
-    dest += src[i];
+  while (true) {
+    if (dest.length() == arr[0]) {
+      pthread_mutex_lock(&m);
+      for (int i = arr[0]; i < arr[1]; ++i) {
+        dest += src[i];
+      }
+      pthread_mutex_unlock(&m);
+      return nullptr;
+    }
   }
-  pthread_mutex_unlock(&m);
-  return nullptr;
 }
 
 int main() {
   pthread_mutex_init(&m, NULL);
   std::cin >> src;
+
   int arr[COUNT][2];
   int step = src.length() / COUNT;
   int k = 0;
@@ -45,7 +49,7 @@ int main() {
   }
 
   std::cout << dest << "\n";
-  pthread_mutex_destroy(&m);
 
+  pthread_mutex_destroy(&m);
   return 0;
 }
