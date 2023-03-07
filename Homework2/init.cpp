@@ -1,8 +1,10 @@
+#include <fcntl.h>
 #include <iostream>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
 int main() {
+  creat("shm_file", 0600);
   key_t key = ftok("shm_file", 1);
   int shmid = shmget(key, 300 * sizeof(int), 0600 | IPC_CREAT | IPC_EXCL);
   if (shmid == -1) {
