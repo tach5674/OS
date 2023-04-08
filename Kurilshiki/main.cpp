@@ -58,8 +58,8 @@ void barmen(int sem_id, pid_t s1, pid_t s2, pid_t s3) {
 
 void smoker(int id, int sem_id) {
   char items[3][10] = {"TABACCO", "MATCHES", "PAPER"};
-  // unsigned short needed_item = rand() % 3;
-  unsigned short needed_item = id;
+  unsigned short needed_item = rand() % 3;
+  //unsigned short needed_item = id;
   ;
   while (true) {
     struct sembuf barmen_wait {
