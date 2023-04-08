@@ -64,20 +64,19 @@ int main() {
     if ((semid = semget(key, 3, 0666 | IPC_CREAT)) == -1) {
       perror("semget");
     }
-
-    semops.sem_num = FULL;
-    semops.sem_op = -1;
-    if (semop(semid, &semops, 1) == -1) {
-      perror("semop");
-    }
-
-    semops.sem_num = MUTEX;
-    semops.sem_op = -1;
-    if (semop(semid, &semops, 1) == -1) {
-      perror("semop");
-    }
-
     for (int i = 0; i < 100; ++i) {
+      semops.sem_num = FULL;
+      semops.sem_op = -1;
+      if (semop(semid, &semops, 1) == -1) {
+        perror("semop");
+      }
+
+      semops.sem_num = MUTEX;
+      semops.sem_op = -1;
+      if (semop(semid, &semops, 1) == -1) {
+        perror("semop");
+      }
+
       nums[i % BUFF] = rand() % 10 + 1;
 
       semops.sem_num = EMPTY;
@@ -85,12 +84,11 @@ int main() {
       if (semop(semid, &semops, 1) == -1) {
         perror("semop");
       }
-    }
-
-    semops.sem_num = MUTEX;
-    semops.sem_op = 1;
-    if (semop(semid, &semops, 1) == -1) {
-      perror("semop");
+      semops.sem_num = MUTEX;
+      semops.sem_op = 1;
+      if (semop(semid, &semops, 1) == -1) {
+        perror("semop");
+      }
     }
 
     if (shmdt(shmp) == -1) {
@@ -106,19 +104,19 @@ int main() {
       perror("semget");
     }
 
-    semops.sem_num = EMPTY;
-    semops.sem_op = -1;
-    if (semop(semid, &semops, 1) == -1) {
-      perror("semop");
-    }
-
-    semops.sem_num = MUTEX;
-    semops.sem_op = -1;
-    if (semop(semid, &semops, 1) == -1) {
-      perror("semop");
-    }
-
     for (int i = 0; i < 100; ++i) {
+      semops.sem_num = EMPTY;
+      semops.sem_op = -1;
+      if (semop(semid, &semops, 1) == -1) {
+        perror("semop");
+      }
+
+      semops.sem_num = MUTEX;
+      semops.sem_op = -1;
+      if (semop(semid, &semops, 1) == -1) {
+        perror("semop");
+      }
+
       std::cout << nums[i % BUFF] << " ";
 
       semops.sem_num = FULL;
@@ -126,12 +124,11 @@ int main() {
       if (semop(semid, &semops, 1) == -1) {
         perror("semop");
       }
-    }
-
-    semops.sem_num = MUTEX;
-    semops.sem_op = 1;
-    if (semop(semid, &semops, 1) == -1) {
-      perror("semop");
+      semops.sem_num = MUTEX;
+      semops.sem_op = 1;
+      if (semop(semid, &semops, 1) == -1) {
+        perror("semop");
+      }
     }
 
     if (shmdt(shmp) == -1) {
